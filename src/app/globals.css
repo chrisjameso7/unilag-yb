@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* Brand tokens (plan §3). Navy + ivory are the identity; green is an accent. */
+@theme {
+  --color-navy: #101c35;
+  --color-navy-soft: #1a2846;
+  --color-green: #087b50;
+  --color-green-deep: #055a3a;
+  --color-ivory: #f8f6f0;
+  --color-ivory-deep: #ece8dd;
+  --color-paper: #ffffff;
+  --color-silver: #a5a9b2;
+  --color-charcoal: #17191d;
+  --color-danger: #9b2c2c;
+  --color-amber: #8a6a10;
+
+  --font-display: var(--font-instrument-serif), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-green);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+  }
+  /* Comfortable tap targets on touch screens */
+  button,
+  [role="button"],
+  input[type="submit"] {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.875rem; /* 46px — thumb-friendly */
+    padding: 0 1.25rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-green);
+    color: white;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-green-deep);
+  }
+  .btn-dark {
+    background: var(--color-navy);
+    color: var(--color-ivory);
+  }
+  .btn-dark:hover:not(:disabled) {
+    background: var(--color-navy-soft);
+  }
+  .btn-ghost {
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    border-color: currentColor;
+  }
+  .btn-sm {
+    min-height: 2.25rem;
+    padding: 0 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 2.875rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.75rem;
+    background: var(--color-paper);
+    border: 1px solid color-mix(in srgb, var(--color-navy) 16%, transparent);
+    font-size: 1rem; /* 16px prevents iOS zoom on focus */
+    color: var(--color-charcoal);
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 15%, transparent);
+  }
+  .input::placeholder {
+    color: color-mix(in srgb, var(--color-navy) 35%, transparent);
+  }
+  textarea.input {
+    min-height: 7rem;
+    line-height: 1.55;
+  }
+
+  .card {
+    background: var(--color-paper);
+    border: 1px solid color-mix(in srgb, var(--color-navy) 10%, transparent);
+    border-radius: 1.25rem;
+  }
+
+  .link {
+    color: var(--color-green);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  .prose-page h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    color: var(--color-navy);
+  }
+  .prose-page p,
+  .prose-page li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: color-mix(in srgb, var(--color-charcoal) 78%, transparent);
+    margin-top: 0.75rem;
+  }
+  .prose-page ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+}
+
+/* Gentle image reveal; disabled for people who prefer less motion. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-ivory-deep), #f3f0e8, var(--color-ivory-deep));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
