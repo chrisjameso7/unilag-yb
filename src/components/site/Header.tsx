@@ -27,6 +27,11 @@ export function Header({ user }: { user: { email: string; isAdmin: boolean } | n
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -36,6 +41,7 @@ export function Header({ user }: { user: { email: string; isAdmin: boolean } | n
   const active = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
+    <>
     <header className="sticky top-0 z-40 border-b border-navy/10 bg-ivory/90 backdrop-blur supports-[backdrop-filter]:bg-ivory/75">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Wordmark />
@@ -80,9 +86,11 @@ export function Header({ user }: { user: { email: string; isAdmin: boolean } | n
           </button>
         </div>
       </div>
+    </header>
 
+      {/* Rendered outside <header>: the header's backdrop-filter would otherwise trap this fixed panel inside it. */}
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-ivory lg:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 z-50 overflow-y-auto bg-ivory lg:hidden">
           <nav aria-label="Mobile" className="container-page flex flex-col py-4">
             {[{ href: "/", label: "Home" }, ...NAV, { href: "/portrait-guide", label: "Portrait guide" }].map((item) => (
               <Link
@@ -111,6 +119,6 @@ export function Header({ user }: { user: { email: string; isAdmin: boolean } | n
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
