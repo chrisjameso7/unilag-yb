@@ -340,7 +340,7 @@ $$;
 -- -----------------------------------------------------------------------------
 -- Admin views (service_role only)
 -- -----------------------------------------------------------------------------
-create view public.admin_student_index as
+create view public.admin_student_index with (security_invoker = true) as
 select
   p.*,
   u.email,
@@ -352,7 +352,7 @@ left join public.users u on u.id = p.user_id
 join public.faculties f on f.id = p.faculty_id
 join public.departments d on d.id = p.department_id;
 
-create view public.admin_verification_queue as
+create view public.admin_verification_queue with (security_invoker = true) as
 select
   v.*,
   u.email,
@@ -365,7 +365,7 @@ join public.users u on u.id = v.user_id
 left join public.student_profiles p on p.user_id = v.user_id
 left join public.departments d on d.id = p.department_id;
 
-create view public.admin_payment_list as
+create view public.admin_payment_list with (security_invoker = true) as
 select
   pay.*,
   u.email,
@@ -375,7 +375,7 @@ from public.payments pay
 left join public.users u on u.id = pay.user_id
 left join public.student_profiles p on p.user_id = pay.user_id;
 
-create view public.admin_request_list as
+create view public.admin_request_list with (security_invoker = true) as
 select
   r.*,
   u.email,
@@ -386,12 +386,12 @@ from public.profile_edit_requests r
 join public.users u on u.id = r.user_id
 left join public.student_profiles p on p.user_id = r.user_id;
 
-create view public.admin_audit_list as
+create view public.admin_audit_list with (security_invoker = true) as
 select a.*, u.email as actor_email
 from public.audit_logs a
 left join public.users u on u.id = a.actor_id;
 
-create view public.admin_editorial_queue as
+create view public.admin_editorial_queue with (security_invoker = true) as
 select
   s.*,
   p.full_name,

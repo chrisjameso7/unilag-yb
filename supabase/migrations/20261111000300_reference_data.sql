@@ -85,10 +85,6 @@ from (values
 ) as d (faculty_slug, name, slug, sort_order)
 join public.faculties f on f.slug = d.faculty_slug
 on conflict (faculty_id, slug) do update set name = excluded.name, sort_order = excluded.sort_order;
-(node:791) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/claude/unilag-yb/src/lib/university.ts is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /home/claude/unilag-yb/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 
 -- Site content (reviewed institutional facts and archive settings).
 insert into public.site_content (key, value, source_url, last_reviewed) values

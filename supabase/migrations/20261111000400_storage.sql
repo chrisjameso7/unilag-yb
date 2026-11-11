@@ -19,7 +19,8 @@
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values
-  ('portraits', 'portraits', true, 5242880,
+  ('portraits', 'portraits', true, 15728640, -- 15MB: selected Faces portraits are copied here; the app caps yearbook portraits at 5MB
+    
      array['image/jpeg', 'image/png', 'image/webp']),
   ('verification-documents', 'verification-documents', false, 8388608,
      array['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
