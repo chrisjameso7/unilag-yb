@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { logoutAction } from "@/lib/actions/auth";
+import { LogoMark } from "@/components/LogoMark";
 
 const NAV = [
   { href: "/students", label: "Students" },
@@ -14,9 +15,12 @@ const NAV = [
 
 export function Wordmark({ light = false }: { light?: boolean }) {
   return (
-    <Link href="/" className={`flex items-baseline gap-1.5 ${light ? "text-ivory" : "text-navy"}`} aria-label="UNILAG Yearbook — home">
-      <span className="display text-[1.45rem] leading-none">UNILAG</span>
-      <span className="eyebrow text-[0.62rem] opacity-70">Yearbook</span>
+    <Link href="/" className={`flex items-center gap-2 ${light ? "text-ivory" : "text-navy"}`} aria-label="UNILAG Yearbook — home">
+      <LogoMark size={30} light={light} className="shrink-0" />
+      <span className="flex items-baseline gap-1.5">
+        <span className="display text-[1.45rem] leading-none">UNILAG</span>
+        <span className="eyebrow text-[0.62rem] opacity-70">Yearbook</span>
+      </span>
     </Link>
   );
 }
