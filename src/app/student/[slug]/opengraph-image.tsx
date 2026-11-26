@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getPublicProfileBySlug } from "@/lib/queries";
+import { logoMark } from "@/components/LogoMark";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -22,7 +23,10 @@ export default async function OpengraphImage({ params }: { params: Promise<{ slu
           </div>
         )}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
-          <div style={{ fontSize: 26, letterSpacing: 6, opacity: 0.6 }}>UNILAG YEARBOOK</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {logoMark({ size: 52, light: true })}
+            <div style={{ fontSize: 26, letterSpacing: 6, opacity: 0.6 }}>UNILAG YEARBOOK</div>
+          </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 76, lineHeight: 1.02 }}>{name}</div>
             <div style={{ fontSize: 30, marginTop: 24, opacity: 0.7 }}>{line}</div>
